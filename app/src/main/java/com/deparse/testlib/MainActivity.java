@@ -3,14 +3,15 @@ package com.deparse.testlib;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.deparse.documentviewer.DocumentViewerActivity;
 import com.deparse.documentviewer.DocumentView;
+import com.deparse.documentviewer.DocumentViewerActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(MainActivity.this, DocumentViewerActivity.class);
                     intent.putExtra(DocumentView.FILE_PATH, listView.getAdapter().getItem(position).toString());
-//                    intent.putExtra(DocumentView.TEMP_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
+                    intent.putExtra(DocumentView.TEMP_PATH, Environment.getExternalStorageDirectory().getAbsolutePath() + "/test01/");
                     startActivity(intent);
                 }
             });
