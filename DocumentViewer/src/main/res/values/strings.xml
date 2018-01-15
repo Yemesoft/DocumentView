@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="copy_file_failed">Copy file to temporary directory failure</string>
+    <string name="file_format_not_supported">File format is not supported</string>
+    <string name="create_temp_dir_failed">Failure to create a temporary directory\n%s</string>
+    <string name="file_is_downloading">The file is being downloaded…</string>
+    <string name="file_download_failed">File download failure</string>
+    <string name="can_not_view_the_file_on_mobile">Unable to view the file on mobile\n%s</string>
+    <string name="file_load_failed">File loading failure</string>
+</resources>

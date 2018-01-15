@@ -33,6 +33,10 @@ public class DocumentHelper {
     private static final String FILE_PREFIX = "file:///";
     private static final String ASSETS_PREFIX = "file:///android_asset/";
 
+    private static MessageProvider mMessageProvider = null;
+
+    private static boolean isInited = false;
+
     private static final List<String> FORMATS_FOR_TBS_READER_VIEW = Arrays.asList(
             ".doc",
             ".docx",
@@ -67,6 +71,7 @@ public class DocumentHelper {
     );
 
     public static void init(Application app) {
+        setMessageProvider(new DefaultMessageProvider(app.getApplicationContext()));
         QbSdk.initX5Environment(app.getApplicationContext(), new QbSdk.PreInitCallback() {
             @Override
             public void onCoreInitFinished() {
@@ -78,9 +83,24 @@ public class DocumentHelper {
                 System.out.println("onViewInitFinished " + b);
             }
         });
+        isInited = true;
+    }
+
+    public static void setMessageProvider(MessageProvider provider) {
+        DocumentHelper.mMessageProvider = provider;
+    }
+
+    static String getMsg(MessageType type, Object... formatArgs) {
+        if (null == mMessageProvider) {
+            throw new RuntimeException("DocumentHelper.init() is never called.");
+        }
+        return mMessageProvider.getMsg(type, formatArgs);
     }
 
     static void view(Context context, String filePath, String tmpPath, final DocumentView.Callback callback) {
+        if (null == mMessageProvider || !isInited) {
+            throw new RuntimeException("DocumentHelper.init() is never called.");
+        }
         final String tempPath = ensureTempPath(context, tmpPath, callback);
         if (null == tempPath) {
             return;
@@ -93,7 +113,7 @@ public class DocumentHelper {
             }
             String path = copyAssetsToSDCard(context, filePath, tempPath);
             if (null == path) {
-                callback.showError("拷贝文件到临时目录失败");
+                callback.showError(DocumentHelper.getMsg(MessageType.COPY_FILE_FAILED));
                 return;
             }
             showFile(path, tempPath, callback);
@@ -112,7 +132,7 @@ public class DocumentHelper {
                 }
                 downloadFile(filePath, tempPath, callback);
             } else {
-                callback.showError("文件格式不支持");
+                callback.showError(DocumentHelper.getMsg(MessageType.FILE_FORMAT_NOT_SUPPORTED));
             }
         } else {
             showFile(filePath, tempPath, callback);
@@ -122,7 +142,7 @@ public class DocumentHelper {
     private static void showFile(String filePath, String tempPath, final DocumentView.Callback callback) {
         String extName = getExtName(filePath);
         if (TextUtils.isEmpty(extName)) {
-            callback.showError("文件格式不支持");
+            callback.showError(DocumentHelper.getMsg(MessageType.FILE_FORMAT_NOT_SUPPORTED));
             return;
         }
         if (FORMATS_FOR_TBS_READER_VIEW.contains(extName)) {
@@ -137,7 +157,7 @@ public class DocumentHelper {
             callback.showWeb(filePath);
             return;
         }
-        callback.showError("文件格式不支持");
+        callback.showError(DocumentHelper.getMsg(MessageType.FILE_FORMAT_NOT_SUPPORTED));
     }
 
     private static String getCachePath(Context context) {
@@ -182,7 +202,7 @@ public class DocumentHelper {
             tmpDir.mkdirs();
         }
         if (!tmpDir.isDirectory()) {
-            callback.showError("创建临时目录失败\n" + tempPath);
+            callback.showError(DocumentHelper.getMsg(MessageType.CREATE_TEMP_DIR_FAILED, tempPath));
             return null;
         }
         return tmpDir.getPath();
@@ -284,7 +304,7 @@ public class DocumentHelper {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                callback.showMsg("正在下载文件...");
+                callback.showMsg(DocumentHelper.getMsg(MessageType.FILE_IS_DOWNLOADING));
             }
 
             @Override
@@ -339,7 +359,7 @@ public class DocumentHelper {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 if (TextUtils.isEmpty(s)) {
-                    callback.showError("文件下载失败");
+                    callback.showError(DocumentHelper.getMsg(MessageType.FILE_DOWNLOAD_FAILED));
                     return;
                 }
                 showFile(s, tempPath, callback);

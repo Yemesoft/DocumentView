@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
             }
             List<String> paths = new ArrayList<>();
             Collections.addAll(paths, files);
-            paths.add("https://raw.githubusercontent.com/MartinKent/DocumentView/master/app/src/main/assets/files/创意视频_团结合作.mp4");
-            paths.add("https://raw.githubusercontent.com/MartinKent/DocumentView/master/app/src/main/assets/files/第三方应用 文件方案接口介绍.pdf");
-            paths.add("https://raw.githubusercontent.com/MartinKent/DocumentView/master/app/src/main/assets/files/#test - %2F副$本.pptx");
-            paths.add("https://raw.githubusercontent.com/MartinKent/DocumentView/master/app/src/main/assets/files/35258493e4d5ee97d827eb74fdab156b.gif");
-            paths.add("https://raw.githubusercontent.com/MartinKent/DocumentView/master/app/src/main/assets/files/test.html");
-            paths.add("https://raw.githubusercontent.com/MartinKent/DocumentView/master/app/src/main/assets/files/test.pptx");
-            paths.add("https://raw.githubusercontent.com/MartinKent/DocumentView/master/app/src/main/assets/files/文件方案常见问题解答.docx");
+            paths.add("https://raw.githubusercontent.com/deparse/DocumentView/master/app/src/main/assets/files/创意视频_团结合作.mp4");
+            paths.add("https://raw.githubusercontent.com/deparse/DocumentView/master/app/src/main/assets/files/第三方应用 文件方案接口介绍.pdf");
+            paths.add("https://raw.githubusercontent.com/deparse/DocumentView/master/app/src/main/assets/files/#test - %2F副$本.pptx");
+            paths.add("https://raw.githubusercontent.com/deparse/DocumentView/master/app/src/main/assets/files/35258493e4d5ee97d827eb74fdab156b.gif");
+            paths.add("https://raw.githubusercontent.com/deparse/DocumentView/master/app/src/main/assets/files/test.html");
+            paths.add("https://raw.githubusercontent.com/deparse/DocumentView/master/app/src/main/assets/files/test.pptx");
+            paths.add("https://raw.githubusercontent.com/deparse/DocumentView/master/app/src/main/assets/files/文件方案常见问题解答.docx");
             listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, paths));
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

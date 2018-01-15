@@ -146,7 +146,7 @@ public class DocumentView extends FrameLayout implements TbsReaderView.ReaderCal
         String ext = filePath.substring(filePath.lastIndexOf(".") + 1);
         boolean result = mTbsReaderView.preOpen(ext, false);
         if (!result) {
-            showMsg("无法在移动端查看该文件\n" + filePath);
+            showMsg(DocumentHelper.getMsg(MessageType.CAN_NOT_VIEW_THE_FILE_ON_MOBILE,filePath));
             return;
         }
         mTbsReaderView.openFile(bundle);
@@ -171,7 +171,7 @@ public class DocumentView extends FrameLayout implements TbsReaderView.ReaderCal
     @Override
     public void onCallBackAction(Integer integer, Object o, Object o1) {
         System.out.println("onCallBackAction integer=" + integer + ", o=" + o + ", o1=" + o1);
-        showMsg("文件预览失败");
+        showMsg(DocumentHelper.getMsg(MessageType.FILE_LOAD_FILED));
     }
 
     public void onResume() {

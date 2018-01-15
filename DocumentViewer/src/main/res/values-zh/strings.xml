@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="copy_file_failed">拷贝文件到临时目录失败</string>
+    <string name="file_format_not_supported">文件格式不支持</string>
+    <string name="create_temp_dir_failed">创建临时目录失败\n%s</string>
+    <string name="file_is_downloading">正在下载文件…</string>
+    <string name="file_download_failed">文件下载失败</string>
+    <string name="can_not_view_the_file_on_mobile">无法在移动端查看该文件\n%s</string>
+    <string name="file_load_failed">文件加载失败</string>
+</resources>
