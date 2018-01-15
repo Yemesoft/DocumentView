@@ -50,11 +50,10 @@ allprojects {
     }
 }
 dependencies {  
-    compile 'com.github.deparse:DocumentView:1.0.1'
+    compile 'com.github.deparse:DocumentView:1.0.2'
 }
 
-multi-language support，English and Chinese as default。If you want to use other language，use：
-
+Multi-language supportted，English and Chinese as default。If you want to use other language，use：
 DocumentHelper.setMessageProvider(new MessageProvider() {
     @Override
     public String getMsg(MessageType type, Object... formatArgs) {
